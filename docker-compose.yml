@@ -1,0 +1,49 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mitra-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://mitra:mitra@db:5432/mitra_ai
+      - REDIS_URL=redis://redis:6379/0
+      - LLM_PROVIDER=mock
+      - OPENAI_API_KEY=
+    depends_on:
+      - db
+      - redis
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mitra-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+    depends_on:
+      - backend
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: mitra-redis
+    ports:
+      - "6379:6379"
+
+  db:
+    image: postgres:16-alpine
+    container_name: mitra-db
+    environment:
+      - POSTGRES_USER=mitra
+      - POSTGRES_PASSWORD=mitra
+      - POSTGRES_DB=mitra_ai
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

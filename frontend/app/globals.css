@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #fff7fb;
+  --bg-panel: rgba(255, 255, 255, 0.78);
+  --fg-primary: #1f1530;
+  --border-soft: rgba(255, 168, 208, 0.42);
+  color-scheme: light;
+}
+
+html.dark {
+  --bg-primary: #0f0a1b;
+  --bg-panel: rgba(20, 16, 35, 0.74);
+  --fg-primary: #f8eafe;
+  --border-soft: rgba(244, 114, 182, 0.3);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--fg-primary);
+}
+
+.glass-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 40px rgba(236, 72, 153, 0.12);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 8px 22px rgba(236, 72, 153, 0.25);
+  }
+  50% {
+    box-shadow: 0 12px 35px rgba(236, 72, 153, 0.5);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: scaleY(0.45);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scaleY(1.05);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.45s ease both;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.52s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 1.8s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2.1s linear infinite;
+}
+
+.animate-wave {
+  transform-origin: bottom;
+  animation: wave 0.9s ease-in-out infinite;
+}
