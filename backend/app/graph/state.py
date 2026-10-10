@@ -8,11 +8,15 @@ class MitraGraphState(TypedDict, total=False):
     user_id: str
     user_text: str
     user_profile: dict[str, Any]
+    reviewed_items: list[dict[str, Any]]
+    payment_method: str
+    payment_id: str | None
 
     intent: dict[str, Any]
     guardrail: dict[str, Any]
     plan: dict[str, Any]
     offers: list[dict[str, Any]]
+    offers_by_item: list[dict[str, Any]]
     comparison: dict[str, Any]
     decision: dict[str, Any]
     purchase: dict[str, Any]

@@ -77,9 +77,35 @@ def start_graph(initial_state: MitraGraphState) -> dict:
     }
 
 
-def resume_graph(thread_id: str, approved: bool) -> dict:
+def thread_owner(thread_id: str) -> str | None:
+    """The user who started this order thread, or None if the thread isn't known."""
+    snapshot = graph.get_state({"configurable": {"thread_id": thread_id}})
+    return (snapshot.values or {}).get("user_id")
+
+
+def pending_order_lines(thread_id: str) -> list[dict] | None:
+    """The order lines waiting for approval on this thread (None if it isn't waiting)."""
+    snapshot = graph.get_state({"configurable": {"thread_id": thread_id}})
+    if not getattr(snapshot, "interrupts", None):
+        return None
+    return list((snapshot.values or {}).get("decision", {}).get("lines", []))
+
+
+def resume_graph(
+    thread_id: str,
+    approved: bool,
+    selections: dict[int, int] | None = None,
+    payment_method: str | None = None,
+    payment_id: str | None = None,
+) -> dict:
     config = {"configurable": {"thread_id": thread_id}}
-    output = graph.invoke(Command(resume={"approved": approved}), config=config)
+    resume = {
+        "approved": approved,
+        "selections": selections or {},
+        "payment_method": payment_method,
+        "payment_id": payment_id,
+    }
+    output = graph.invoke(Command(resume=resume), config=config)
     snapshot = graph.get_state(config)
     interrupted = bool(getattr(snapshot, "interrupts", None))
 

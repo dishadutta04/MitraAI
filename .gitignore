@@ -9,7 +9,13 @@ node_modules/
 
 # Env
 .env
+.env.local
+
+# Clerk keyless-mode keys
+.clerk/
 
 # Misc
 .DS_Store
 *.db
+backend/models/
+*.tsbuildinfo

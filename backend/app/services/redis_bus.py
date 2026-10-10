@@ -37,7 +37,10 @@ class RedisBus:
             return []
 
     def get_pubsub(self):
+        # pubsub() connects lazily, so ping first: otherwise a missing Redis only shows up
+        # as an exception at subscribe time and the socket closes without the warning.
         try:
+            self.client.ping()
             return self.client.pubsub()
         except Exception:
             return None

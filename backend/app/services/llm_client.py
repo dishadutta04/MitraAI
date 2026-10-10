@@ -53,7 +53,7 @@ def generate_notification_with_llm(summary_seed: str) -> str | None:
         return None
     try:
         prompt = (
-            "You are Mitra AI talking to an elderly Indian user in simple comforting Hinglish. "
+            "You are Mitra AI talking to an elderly Indian user in simple, warm English. "
             "Rewrite this message in 1 short sentence, keep it warm and clear: "
             f"{summary_seed}"
         )

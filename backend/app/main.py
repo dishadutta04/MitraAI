@@ -4,6 +4,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.orders import router as orders_router
+from app.api.profile import router as profile_router
+from app.api.voice import router as voice_router
 from app.api.ws import router as ws_router
 from app.core.config import settings
 from app.core.db import init_db
@@ -30,4 +32,6 @@ def health_check() -> dict[str, str]:
 
 
 app.include_router(orders_router)
+app.include_router(profile_router)
 app.include_router(ws_router)
+app.include_router(voice_router)
